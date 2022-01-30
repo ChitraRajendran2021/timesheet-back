@@ -30,11 +30,11 @@ class ViewTimesheetComponent extends Component {
                         </div>
                         <div className = "row">
                             <label> Punch In Time: </label>
-                            <div> { this.state.timesheet.firstName }</div>
+                            <div> { this.state.timesheet.loginTime }</div>
                         </div>
                         <div className = "row">
                             <label> Punch Out Time: </label>
-                            <div> { this.state.timesheet.lastName }</div>
+                            <div> { this.state.timesheet.logoutTime }</div>
                         </div>
                     </div>
 

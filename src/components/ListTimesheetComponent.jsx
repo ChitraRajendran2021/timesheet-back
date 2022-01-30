@@ -59,9 +59,9 @@ class ListTimesheetComponent extends Component {
                                     this.state.timesheets.map(
                                         timesheet => 
                                         <tr key = {timesheet.id}>
-                                             <td> {timesheet.emailId}</td>
-                                             <td> { timesheet.firstName} </td>   
-                                             <td> {timesheet.lastName}</td>
+                                             <td> {timesheet.currDate}</td>
+                                             <td> { timesheet.loginTime.split(',')[1]} </td>   
+                                             <td> {timesheet.logoutTime.split(',')[1]}</td>
                                              <td>
                                                  <button onClick={ () => this.editTimesheet(timesheet.id)} className="btn btn-info">Update </button>
                                                  <button style={{marginLeft: "10px"}} onClick={ () => this.deleteTimesheet(timesheet.id)} className="btn btn-danger">Delete </button>

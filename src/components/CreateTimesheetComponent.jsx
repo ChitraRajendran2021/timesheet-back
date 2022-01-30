@@ -15,19 +15,15 @@ class CreateTimesheetComponent extends Component {
         this.state = {
             // step 2
             id: this.props.match.params.id,
-            firstName: '',
-            lastName: '',
-            emailId: new Date().toLocaleString(),
+            currDate: new Date().toLocaleString().split(',')[0],
             login:null,
             logout:null
-            
-            
         }
-        this.changeFirstNameHandler = this.changeFirstNameHandler.bind(this);
-        this.changeLastNameHandler = this.changeLastNameHandler.bind(this);
+  
         this.saveOrUpdateTimesheet = this.saveOrUpdateTimesheet.bind(this);
         this.changeLoginHandler = this.changeLoginHandler.bind(this);
         this.changeLogoutHandler = this.changeLogoutHandler.bind(this);
+        this.changeCurrDateHandler = this.changeCurrDateHandler.bind(this);
     }
 
     // step 3
@@ -39,18 +35,17 @@ class CreateTimesheetComponent extends Component {
         }else{
             TimesheetService.getTimesheetById(this.state.id).then( (res) =>{
                 let timesheet = res.data;
-                this.setState({firstName: timesheet.firstName,
-                    lastName: timesheet.lastName,
-                    emailId : timesheet.emailId,
-                    login:timesheet.firstName,
-                    logout:timesheet.lastName
+                this.setState({login: timesheet.loginTime,
+                    logout: timesheet.logoutTime,
+                    currDate : timesheet.currDate
+             
                 });
             });
         }        
     }
     saveOrUpdateTimesheet = (e) => {
         e.preventDefault();
-        let timesheet = {firstName: this.state.login.toLocaleString(), lastName: this.state.logout.toLocaleString(), emailId: this.state.emailId};
+        let timesheet = {loginTime: this.state.login, logoutTime: this.state.logout, currDate: this.state.currDate.split(',')[0]};
         console.log('timesheet => ' + JSON.stringify(timesheet));
 
         // step 5
@@ -65,24 +60,17 @@ class CreateTimesheetComponent extends Component {
         }
     }
     
-    changeFirstNameHandler= (event) => {
-        this.setState({firstName: event.target.value});
-    }
+ 
     changeLoginHandler= (event) => {
         this.setState({login: event});
     }
     changeLogoutHandler= (event) => {
         this.setState({logout: event});
     }
-
-    changeLastNameHandler= (event) => {
-        this.setState({lastName: event.target.value});
+    changeCurrDateHandler= (event) => {
+        this.setState({currDate: event});
     }
-
-    changeEmailHandler= (event) => {
-        this.setState({emailId: event.target.value});
-    }
-
+    
     cancel(){
         this.props.history.push('/timesheets');
     }
@@ -110,8 +98,8 @@ class CreateTimesheetComponent extends Component {
 
                                     <div className = "form-group">
                                             <label> Date: </label>
-                                            <input placeholder="Date" name="emailId" className="form-control" 
-                                                value={this.state.emailId} />
+                                            <input placeholder="Date" name="currDate" className="form-control" 
+                                                value={this.state.currDate} />
                                         </div>
                                         <div className = "form-group">
                                             <label> Punch In Time: </label>
