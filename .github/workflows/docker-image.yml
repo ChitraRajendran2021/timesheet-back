@@ -1,0 +1,29 @@
+name: Docker Image CI
+on:
+  push:
+    branches: [ main ]
+env:
+  SERVICE_ACCOUNT_KEY: ${{ secrets.GCP_SA }}
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup Authentication with gcloud
+      uses: google-github-actions/setup-gcloud@master
+      with:
+          service_account_key: ${{ env.SERVICE_ACCOUNT_KEY }}
+          export_default_credentials: true  
+    - name : Authorize Docker push
+      run: gcloud auth configure-docker --quiet 
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag gcr.io/inspiring-lens-325816/timesheet-web:${{github.sha}}
+    - name : Docker Push
+      run : docker push gcr.io/inspiring-lens-325816/timesheet-web:${{github.sha}}
+    - id: 'deploy'
+      uses: 'google-github-actions/deploy-cloudrun@v0'
+      with:
+        service: 'hello-cloud-run-web'
+        image: 'gcr.io/inspiring-lens-325816/timesheet-web:${{github.sha}}'
+    - name: 'Use output'
+      run: 'curl "${{ steps.deploy.outputs.url }}"'
