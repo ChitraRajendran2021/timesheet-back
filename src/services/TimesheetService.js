@@ -1,11 +1,11 @@
 import axios from 'axios';
 
-const EMPLOYEE_API_BASE_URL = "http://localhost:8080/api/v1/timesheetss";
+const EMPLOYEE_API_BASE_URL = "https://hello-cloud-run-2ia6hqkrja-uc.a.run.app";
 
 class TimesheetService {
 
     getTimesheets(){
-        return axios.get(EMPLOYEE_API_BASE_URL);
+        return axios.get(EMPLOYEE_API_BASE_URL+ '/getTimes' );
     }
 
     createTimesheet(timesheet){
