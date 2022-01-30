@@ -14,7 +14,7 @@ class TimesheetService {
     }
 
     createTimesheet(timesheet){
-        return axios.post(EMPLOYEE_API_BASE_URL, timesheet,{
+        return axios.post(EMPLOYEE_API_BASE_URL+'/timesheets', timesheet,{
             headers: {
                 'Access-Control-Allow-Origin' : '*',
                 'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',
