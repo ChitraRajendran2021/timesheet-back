@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 const EMPLOYEE_API_BASE_URL = "https://hello-cloud-run-2ia6hqkrja-uc.a.run.app";
+//const EMPLOYEE_API_BASE_URL = "http://localhost:8080";
 class TimesheetService {
 
     getTimesheets(){
@@ -24,17 +25,17 @@ class TimesheetService {
     }
 
     getTimesheetById(timesheetId){
-        return axios.get(EMPLOYEE_API_BASE_URL + '/' + timesheetId,{
+        return axios.get(EMPLOYEE_API_BASE_URL + '/timesheets/' + timesheetId,{
             headers: {
                 'Access-Control-Allow-Origin' : '*',
-                'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+                'Access-Control-Allow-Methods':'GET',
               },
       
         });
     }
 
     updateTimesheet(timesheet, timesheetId){
-        return axios.put(EMPLOYEE_API_BASE_URL + '/' + timesheetId, timesheet,{
+        return axios.put(EMPLOYEE_API_BASE_URL + '/timesheets/' + timesheetId, timesheet,{
             headers: {
                 'Access-Control-Allow-Origin' : '*',
                 'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',
@@ -44,7 +45,7 @@ class TimesheetService {
     }
 
     deleteTimesheet(timesheetId){
-        return axios.delete(EMPLOYEE_API_BASE_URL + '/' + timesheetId,{
+        return axios.delete(EMPLOYEE_API_BASE_URL + '/timesheets/' + timesheetId,{
             headers: {
                 'Access-Control-Allow-Origin' : '*',
                 'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',

@@ -13,6 +13,7 @@
     "axios": "^0.19.2",
     "bootstrap": "^4.5.0",
     "date-fns": "latest",
+    "moment": "^2.29.1",
     "react": "^17.0.2",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import TimesheetService from '../services/TimesheetService'
+import moment from 'moment'
 
 class ListTimesheetComponent extends Component {
     constructor(props) {
@@ -60,8 +61,12 @@ class ListTimesheetComponent extends Component {
                                         timesheet => 
                                         <tr key = {timesheet.id}>
                                              <td> {timesheet.currDate}</td>
-                                             <td> { timesheet.loginTime.split(',')[1]} </td>   
-                                             <td> {timesheet.logoutTime.split(',')[1]}</td>
+                                             <td> {
+                                             
+                                            moment(moment.utc(timesheet.loginTime).toDate()).local().format('hh:mm A')
+                                             
+                                             }</td>   
+                                             <td> {moment(moment.utc(timesheet.logoutTime).toDate()).local().format('hh:mm A')}</td>
                                              <td>
                                                  <button onClick={ () => this.editTimesheet(timesheet.id)} className="btn btn-info">Update </button>
                                                  <button style={{marginLeft: "10px"}} onClick={ () => this.deleteTimesheet(timesheet.id)} className="btn btn-danger">Delete </button>

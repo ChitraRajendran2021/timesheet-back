@@ -45,7 +45,7 @@ class CreateTimesheetComponent extends Component {
     }
     saveOrUpdateTimesheet = (e) => {
         e.preventDefault();
-        let timesheet = {loginTime: this.state.login, logoutTime: this.state.logout, currDate: this.state.currDate.split(',')[0]};
+        let timesheet = {loginTime: this.state.login, logoutTime: this.state.logout, currDate: this.state.currDate};
         console.log('timesheet => ' + JSON.stringify(timesheet));
 
         // step 5
