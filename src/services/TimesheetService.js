@@ -1,7 +1,6 @@
 import axios from 'axios';
 
 const EMPLOYEE_API_BASE_URL = "https://hello-cloud-run-2ia6hqkrja-uc.a.run.app";
-
 class TimesheetService {
 
     getTimesheets(){
