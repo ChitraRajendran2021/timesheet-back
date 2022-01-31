@@ -70,7 +70,6 @@ class ListTimesheetComponent extends Component {
                                              <td>
                                                  <button onClick={ () => this.editTimesheet(timesheet.id)} className="btn btn-info">Update </button>
                                                  <button style={{marginLeft: "10px"}} onClick={ () => this.deleteTimesheet(timesheet.id)} className="btn btn-danger">Delete </button>
-                                                 <button style={{marginLeft: "10px"}} onClick={ () => this.viewTimesheet(timesheet.id)} className="btn btn-info">View </button>
                                              </td>
                                         </tr>
                                     )
