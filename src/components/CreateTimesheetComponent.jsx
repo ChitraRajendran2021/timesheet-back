@@ -54,6 +54,9 @@ class CreateTimesheetComponent extends Component {
                 this.props.history.push('/timesheets');
             });
         }else{
+            var beginningTime =  moment(moment.utc(timesheet.loginTime).toDate()).local().format('hh:mm A');
+            var endTime =  moment(moment.utc(timesheet.logoutTime).toDate()).local().format('hh:mm A');
+            console.log(beginningTime.isBefore(endTime));
             TimesheetService.updateTimesheet(timesheet, this.state.id).then( res => {
                 this.props.history.push('/timesheets');
             });
