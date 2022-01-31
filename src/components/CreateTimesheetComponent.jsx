@@ -54,6 +54,7 @@ class CreateTimesheetComponent extends Component {
         var endTime = moment(moment(moment.utc(timesheet.logoutTime).toDate()).local().format('hh:mm A'), 'hh:mm A');
         var duration = moment.duration(endTime.diff(beginningTime));
         var hours = duration.asHours();
+        timesheet.overTime = hours;
         // step 5
         if (beginningTime.isBefore(endTime)) {
 
@@ -109,7 +110,7 @@ class CreateTimesheetComponent extends Component {
                             }
                             <div className="card-body">
                                 <form>
-                                    <p style={ {color: "red",fontWeight: "bold"}}>{this.state.errorMessage}</p>
+                                    <p style={{ color: "red", fontWeight: "bold" }}>{this.state.errorMessage}</p>
 
                                     <div className="form-group">
                                         <label> Date:    {this.state.currDate} </label>
@@ -118,15 +119,15 @@ class CreateTimesheetComponent extends Component {
                                     <div className="form-group">
 
                                         <label > Punch In Time: </label>
-                                        <LocalizationProvider  dateAdapter={AdapterDateFns}>
-                                            <TimePicker 
+                                        <LocalizationProvider dateAdapter={AdapterDateFns}>
+                                            <TimePicker
                                                 label="Enter Login Time"
                                                 value={this.state.login} name="login"
                                                 onChange={this.changeLoginHandler}
                                                 renderInput={(params) => <TextField {...params} />}
                                             />
                                         </LocalizationProvider>
-                                        </div>
+                                    </div>
                                     <div className="form-group">
                                         <label> Punch Out Time: </label>
                                         <LocalizationProvider dateAdapter={AdapterDateFns}>
