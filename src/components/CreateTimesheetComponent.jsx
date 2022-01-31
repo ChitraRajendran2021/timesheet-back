@@ -6,7 +6,6 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import TimePicker from '@mui/lab/TimePicker';
 import moment from 'moment'
 
-
 class CreateTimesheetComponent extends Component {
        
     constructor(props) {
@@ -48,19 +47,24 @@ class CreateTimesheetComponent extends Component {
         e.preventDefault();
         let timesheet = {loginTime: this.state.login, logoutTime: this.state.logout, currDate: this.state.currDate};
         console.log('timesheet => ' + JSON.stringify(timesheet));
+        var beginningTime =  moment(moment(moment.utc(timesheet.loginTime).toDate()).local().format('hh:mm A'), 'hh:mm A');            
+        var endTime =   moment(moment(moment.utc(timesheet.logoutTime).toDate()).local().format('hh:mm A'), 'hh:mm A');
 
         // step 5
-        if(this.state.id === '_add'){
-            TimesheetService.createTimesheet(timesheet).then(res =>{
-                this.props.history.push('/timesheets');
-            });
+        if(beginningTime.isBefore(endTime)){
+
+            if(this.state.id === '_add'){
+                    TimesheetService.createTimesheet(timesheet).then(res =>{
+                        this.props.history.push('/timesheets');
+                    });
+        
+            }else{
+                TimesheetService.updateTimesheet(timesheet, this.state.id).then( res => {
+                    this.props.history.push('/timesheets');
+                });
+            }
         }else{
-            var beginningTime =  moment(moment.utc(timesheet.loginTime).toDate()).local().format('hh:mm A');
-            var endTime =  moment(moment.utc(timesheet.logoutTime).toDate()).local().format('hh:mm A');
-            console.log(beginningTime.isBefore(endTime));
-            TimesheetService.updateTimesheet(timesheet, this.state.id).then( res => {
-                this.props.history.push('/timesheets');
-            });
+            alert("Please input a valid time");
         }
     }
     
@@ -68,6 +72,7 @@ class CreateTimesheetComponent extends Component {
     changeLoginHandler= (event) => {
         this.setState({login: event});
     }
+   
     changeLogoutHandler= (event) => {
         this.setState({logout: event});
     }
@@ -127,8 +132,7 @@ class CreateTimesheetComponent extends Component {
       />
     </LocalizationProvider>
                                         </div>
-
-                                        
+                                                                               
                                         <button className="btn btn-success" onClick={this.saveOrUpdateTimesheet}>Save</button>
                                         <button className="btn btn-danger" onClick={this.cancel.bind(this)} style={{marginLeft: "10px"}}>Cancel</button>
                                     </form>
