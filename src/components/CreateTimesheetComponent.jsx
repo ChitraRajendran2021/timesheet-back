@@ -50,10 +50,10 @@ class CreateTimesheetComponent extends Component {
     saveOrUpdateTimesheet = (e) => {
         e.preventDefault();
         let timesheet = { loginTime: this.state.login, logoutTime: this.state.logout, currDate: this.state.currDate };
-        console.log('timesheet => ' + JSON.stringify(timesheet));
         var beginningTime = moment(moment(moment.utc(timesheet.loginTime).toDate()).local().format('hh:mm A'), 'hh:mm A');
         var endTime = moment(moment(moment.utc(timesheet.logoutTime).toDate()).local().format('hh:mm A'), 'hh:mm A');
-
+        var duration = moment.duration(endTime.diff(beginningTime));
+        var hours = duration.asHours();
         // step 5
         if (beginningTime.isBefore(endTime)) {
 

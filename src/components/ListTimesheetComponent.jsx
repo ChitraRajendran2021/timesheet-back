@@ -27,9 +27,15 @@ class ListTimesheetComponent extends Component {
     }
 
     componentDidMount(){
+        var overTime = 0;
         TimesheetService.getTimesheets().then((res) => {
             this.setState({ timesheets: res.data});
+            var beginningTime = moment(moment(moment.utc(res.data.loginTime).toDate()).local().format('hh:mm A'), 'hh:mm A');
+            var endTime = moment(moment(moment.utc(res.data.logoutTime).toDate()).local().format('hh:mm A'), 'hh:mm A');
+            var duration = moment.duration(endTime.diff(beginningTime));
+            overTime=overTime+ duration.asHours();
         });
+
     }
 
     addTimesheet(){
@@ -52,6 +58,7 @@ class ListTimesheetComponent extends Component {
                                     <th> Date </th>
                                     <th> Punch In Time </th>
                                     <th> Punch Out Time</th>
+                                    <th> Over Time</th>
                                     <th> Actions</th>
                                 </tr>
                             </thead>
@@ -67,6 +74,7 @@ class ListTimesheetComponent extends Component {
                                              
                                              }</td>   
                                              <td> {moment(moment.utc(timesheet.logoutTime).toDate()).local().format('hh:mm A')}</td>
+                                             <td> {timesheet.overTime}</td>
                                              <td>
                                                  <button onClick={ () => this.editTimesheet(timesheet.id)} className="btn btn-info">Update </button>
                                                  <button style={{marginLeft: "10px"}} onClick={ () => this.deleteTimesheet(timesheet.id)} className="btn btn-danger">Delete </button>
